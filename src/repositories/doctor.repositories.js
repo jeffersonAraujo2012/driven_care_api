@@ -1,11 +1,22 @@
 import db from "../config/database.js";
 
 export async function findDoctorByEmail(email) {
-  const findResult = await db.query(
-    `SELECT * FROM doctors WHERE email = $1`,
-    [email]
+  const result = await db.query(`SELECT * FROM doctors WHERE email = $1`, [
+    email,
+  ]);
+  return result;
+}
+
+export async function findByName(name) {
+  const result = await db.query(
+    `
+    SELECT * FROM doctors
+    WHERE LOWER(name)
+    LIKE '%' || LOWER($1) || '%'
+  `,
+    [name]
   );
-  return findResult;
+  return result;
 }
 
 export async function create(doctor) {
@@ -20,5 +31,6 @@ export async function create(doctor) {
 
 export default {
   create,
-  findDoctorByEmail
+  findDoctorByEmail,
+  findByName,
 };

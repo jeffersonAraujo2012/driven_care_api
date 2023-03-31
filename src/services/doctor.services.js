@@ -16,6 +16,12 @@ export async function create(doctor) {
   await doctorRepositories.create({ name, age, email, hashPassword, cpf });
 }
 
+export async function findByName(name) {
+  const { rows } = await doctorRepositories.findByName(name);
+  return rows;
+}
+
 export default {
   create,
+  findByName,
 };

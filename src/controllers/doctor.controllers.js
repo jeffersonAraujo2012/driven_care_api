@@ -11,6 +11,18 @@ export async function create(req, res) {
   }
 }
 
+export async function findByName(req, res) {
+  const { name } = req.body;
+
+  try {
+    const doctors = await doctorServices.findByName(name);
+    return res.status(200).send(doctors);
+  } catch (err) {
+    return res.status(500).send("Something went wrong: " + err.message);
+  }
+}
+
 export default {
   create,
+  findByName,
 };
