@@ -21,7 +21,13 @@ export async function findByName(name) {
   return rows;
 }
 
+export async function findBySpecilty(idSpecilty) {
+  const { rows } = await doctorRepositories.findBySpecilty(idSpecilty);
+  return rows;
+}
+
 export default {
   create,
   findByName,
+  findBySpecilty,
 };

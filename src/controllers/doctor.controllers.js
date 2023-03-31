@@ -22,7 +22,19 @@ export async function findByName(req, res) {
   }
 }
 
+export async function findBySpecilty(req, res) {
+  const { idSpecilty } = req.body;
+
+  try {
+    const doctors = await doctorServices.findBySpecilty(idSpecilty);
+    return res.status(200).send(doctors);
+  } catch (err) {
+    return res.status(500).send("Something went wrong: " + err.message);
+  }
+}
+
 export default {
   create,
   findByName,
+  findBySpecilty,
 };
