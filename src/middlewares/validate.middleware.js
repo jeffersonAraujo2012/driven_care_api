@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+
 export default function validate(schema) {
   return (req, res, next) => {
     const data = req.body;
