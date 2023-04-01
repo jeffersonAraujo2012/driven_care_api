@@ -8,5 +8,6 @@ const doctorRoutes = express.Router();
 doctorRoutes.post("/", validate(doctorSchema), doctorControllers.create);
 doctorRoutes.get("/findByName", doctorControllers.findByName);
 doctorRoutes.get("/findBySpecilty", doctorControllers.findBySpecilty);
+doctorRoutes.get("/address", doctorControllers.findByAddress);
 
 export default doctorRoutes;

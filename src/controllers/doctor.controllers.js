@@ -33,8 +33,20 @@ export async function findBySpecilty(req, res) {
   }
 }
 
+export async function findByAddress(req, res) {
+  const { stateId } = req.body;
+
+  try {
+    const doctors = await doctorServices.findByAddress(stateId);
+    return res.status(200).send(doctors);
+  } catch (err) {
+    return res.status(500).send("Something went wrong: " + err.message);
+  }
+}
+
 export default {
   create,
   findByName,
   findBySpecilty,
+  findByAddress,
 };

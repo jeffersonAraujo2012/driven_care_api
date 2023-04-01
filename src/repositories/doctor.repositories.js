@@ -33,6 +33,20 @@ export async function findBySpecilty(idSpecilty) {
   return result;
 }
 
+export async function findByAddress(addressId) {
+  const result = await db.query(
+    `
+    SELECT d.* FROM doctors d
+    WHERE d.id IN (
+      SELECT d_a.doctor_id FROM doctor_address d_a
+      WHERE d_a.state_id = $1
+    )
+  `,
+    [addressId]
+  );
+  return result;
+}
+
 export async function create(doctor) {
   const { name, age, email, hashPassword: password, cpf } = doctor;
 
@@ -48,4 +62,5 @@ export default {
   findDoctorByEmail,
   findByName,
   findBySpecilty,
+  findByAddress,
 };
