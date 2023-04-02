@@ -1,11 +1,17 @@
 import db from "../config/database.js";
 
 export async function findPatientByEmail(email) {
-  const findResult = await db.query(
-    `SELECT * FROM patients WHERE email = $1`,
-    [email]
-  );
+  const findResult = await db.query(`SELECT * FROM patients WHERE email = $1`, [
+    email,
+  ]);
   return findResult;
+}
+
+export async function findById(id) {
+  const result = await db.query(`SELECT * FROM patients WHERE id = $1`, [
+    id,
+  ]);
+  return result;
 }
 
 export async function create(patient) {
@@ -20,5 +26,6 @@ export async function create(patient) {
 
 export default {
   create,
-  findPatientByEmail
+  findPatientByEmail,
+  findById,
 };
