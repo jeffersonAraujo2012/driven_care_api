@@ -44,9 +44,21 @@ export async function findByAddress(req, res) {
   }
 }
 
+export async function getSchedules(req, res) {
+  const { doctorId } = req.body;
+
+  try {
+    const schedules = await doctorServices.getSchedules(doctorId);
+    return res.status(200).send(schedules);
+  } catch (err) {
+    return res.status(500).send("Something went wrong: " + err.message);
+  }
+}
+
 export default {
   create,
   findByName,
   findBySpecilty,
   findByAddress,
+  getSchedules,
 };

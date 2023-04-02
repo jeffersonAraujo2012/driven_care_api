@@ -7,6 +7,11 @@ export async function findDoctorByEmail(email) {
   return result;
 }
 
+export async function findById(id) {
+  const result = await db.query(`SELECT * FROM doctors WHERE id = $1`, [id]);
+  return result;
+}
+
 export async function findByName(name) {
   const result = await db.query(
     `
@@ -57,10 +62,23 @@ export async function create(doctor) {
   );
 }
 
+export async function getSchedules(doctorId) {
+  const result = await db.query(
+    `SELECT * FROM schedules
+     WHERE doctor_id = $1 AND
+     date BETWEEN (CURRENT_DATE - INTERVAL '1 day') AND (CURRENT_DATE + INTERVAL '29 days')
+    `,
+    [doctorId]
+  );
+  return result;
+}
+
 export default {
   create,
   findDoctorByEmail,
+  findById,
   findByName,
   findBySpecilty,
   findByAddress,
+  getSchedules,
 };

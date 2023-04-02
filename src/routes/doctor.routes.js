@@ -9,5 +9,6 @@ doctorRoutes.post("/", validate(doctorSchema), doctorControllers.create);
 doctorRoutes.get("/findByName", doctorControllers.findByName);
 doctorRoutes.get("/findBySpecilty", doctorControllers.findBySpecilty);
 doctorRoutes.get("/address", doctorControllers.findByAddress);
+doctorRoutes.get("/schedules", doctorControllers.getSchedules);
 
 export default doctorRoutes;
