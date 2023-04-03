@@ -64,7 +64,7 @@ export async function create(doctor) {
 
 export async function getSchedules(doctorId) {
   const result = await db.query(
-    `SELECT * FROM schedules
+    `SELECT * FROM appointments
      WHERE doctor_id = $1 AND
      date BETWEEN (CURRENT_DATE - INTERVAL '1 day') AND (CURRENT_DATE + INTERVAL '29 days')
     `,

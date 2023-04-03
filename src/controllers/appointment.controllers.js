@@ -11,6 +11,18 @@ export async function findByPatient(req, res) {
   }
 }
 
+export async function create(req, res) {
+  const newAppointment = req.body;
+
+  try {
+    await appointmentServices.create(newAppointment);
+    res.sendStatus(201);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+}
+
 export default {
   findByPatient,
+  create,
 };
