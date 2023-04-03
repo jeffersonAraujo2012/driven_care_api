@@ -14,6 +14,13 @@ export async function findById(id) {
   return result;
 }
 
+export async function findByCpf(cpf) {
+  const result = await db.query(`SELECT * FROM patients WHERE cpf = $1`, [
+    cpf,
+  ]);
+  return result;
+}
+
 export async function create(patient) {
   const { name, age, email, hashPassword: password, cpf } = patient;
 
@@ -28,4 +35,5 @@ export default {
   create,
   findPatientByEmail,
   findById,
+  findByCpf
 };
