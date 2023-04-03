@@ -7,7 +7,7 @@ export async function create(req, res) {
     await doctorServices.create({ name, age, email, password, cpf });
     return res.sendStatus(201);
   } catch (err) {
-    return res.status(500).send("Something went wrong: " + err.message);
+    return res.status(500).send(err.name + ": " + err.message);
   }
 }
 
@@ -51,7 +51,7 @@ export async function getSchedules(req, res) {
     const schedules = await doctorServices.getSchedules(doctorId);
     return res.status(200).send(schedules);
   } catch (err) {
-    return res.status(500).send("Something went wrong: " + err.message);
+    return res.status(500).send(err.name + ": " + err.message);
   }
 }
 

@@ -1,14 +1,15 @@
 import bcrypt from "bcrypt";
+import errors from "../errors/index.js";
 
 import doctorRepositories from "../repositories/doctor.repositories.js";
-import utilsServices, { generateBasicSchedule } from "./utils.services.js";
+import utilsServices from "./utils.services.js";
 
 export async function create(doctor) {
   const { name, age, email, password, cpf } = doctor;
 
   //Doctor already exists?
-  const { rowCount } = await doctorRepositories.findDoctorByEmail(email);
-  if (rowCount) throw new Error("doctor already exists");
+  const { rowCount } = await doctorRepositories.findByCpf(cpf);
+  if (rowCount) throw errors.conflictError("Doctor already exists");
 
   //Encrypt password
   const hashPassword = await bcrypt.hash(password, 10);
