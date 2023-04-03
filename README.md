@@ -5,7 +5,7 @@ The objective of this project is to develop a platform for scheduling medical ap
 
 1 - All doctors work from Monday to Saturday. The times being:
 
-*Monday to Friday: 8am to 5pm. Being the break from 12h to 13h.
+* Monday to Friday: 8am to 5pm. Being the break from 12h to 13h.
 * Saturdays: 8 am to 12 pm without breaks.
 
 2 - The service time will be up to 30 minutes, so the time interval that the patient can schedule is always half an hour.
