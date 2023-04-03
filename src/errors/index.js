@@ -12,7 +12,23 @@ function unauthorizedError() {
   };
 }
 
+function invalidTokenError() {
+  return {
+    name: "InvalidTokenError",
+    message: "Invalid token",
+  };
+}
+
+function noTokenError() {
+  return {
+    name: "NoToken",
+    message: "You must be logged",
+  };
+}
+
 export default {
   conflictError,
   unauthorizedError,
+  noTokenError,
+  invalidTokenError,
 };
