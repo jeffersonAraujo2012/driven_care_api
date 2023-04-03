@@ -3,7 +3,7 @@ import db from "../config/database.js";
 export async function findByPatient(patientId) {
   const result = await db.query(
     `
-    SELECT a.*, doctors.name, specilties.name FROM appointments a
+    SELECT a.*, doctors.name AS "doctorName", array_agg(specilties.name) AS specilty FROM appointments a
     LEFT JOIN doctors
     ON doctors.id = a.doctor_id
     LEFT JOIN specilties
@@ -12,6 +12,7 @@ export async function findByPatient(patientId) {
       WHERE doctor_id = a.doctor_id
     )
     WHERE patient_id = $1
+    GROUP BY a.id, doctors.name
   `,
     [patientId]
   );
