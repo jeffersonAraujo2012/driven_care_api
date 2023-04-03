@@ -7,7 +7,7 @@ export async function create(req, res) {
     await patientServices.create({ name, age, email, password, cpf });
     return res.sendStatus(201);
   } catch (err) {
-    return res.status(500).send("Something went wrong: " + err.message);
+    return res.status(500).send(err.name + ": " + err.message);
   }
 }
 
