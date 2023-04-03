@@ -37,7 +37,7 @@ export async function findByDoctor(doctorId) {
 }
 
 export async function create(newAppointment) {
-  const { date, start, doctorId, patientId } = newAppointment;
+  const { date, start, doctorId, patientId, speciltyId } = newAppointment;
 
   //date DD:MM:YYYY --> YYYY-MM-DD
   let formatedDate = date.split("/");
@@ -49,10 +49,10 @@ export async function create(newAppointment) {
 
   const result = await db.query(
     `
-    INSERT INTO appointments (date, starts_at, doctor_id, patient_id)
-    VALUES ($1, $2, $3, $4)
+    INSERT INTO appointments (date, starts_at, doctor_id, patient_id, specilty_id)
+    VALUES ($1, $2, $3, $4, $5)
   `,
-    [formatedDate, start, doctorId, patientId]
+    [formatedDate, start, doctorId, patientId, speciltyId]
   );
 }
 

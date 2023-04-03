@@ -28,7 +28,7 @@ export async function findByDoctor(doctorId) {
 }
 
 export async function create(newAppointment) {
-  const { date, start, doctorId, patientId } = newAppointment;
+  const { date, start, doctorId, patientId, speciltyId } = newAppointment;
 
   //Exists doctor and patient?
   const { rowCount: existsDoctor } = await doctorRepositories.findById(
@@ -49,6 +49,11 @@ export async function create(newAppointment) {
     return false;
   }).length;
   if (!isFree) throw Error("The chosen schedule is busy");
+
+  //The doctor has the specilty?
+  const { rows: specilties } = await doctorRepositories.getSpecilties(doctorId);
+  const hasSpecilty = specilties.filter(s => s.specilty_id === speciltyId).length;
+  if (!hasSpecilty) throw Error("The doctor has not the specilty");
 
   await appointmentRepositories.create(newAppointment);
 }

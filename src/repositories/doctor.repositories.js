@@ -73,6 +73,16 @@ export async function getSchedules(doctorId) {
   return result;
 }
 
+export async function getSpecilties(doctorId) {
+  const result = await db.query(
+    `SELECT specilty_id FROM doctors_specilties
+     WHERE doctor_id = $1
+    `,
+    [doctorId]
+  );
+  return result;
+}
+
 export default {
   create,
   findDoctorByEmail,
@@ -81,4 +91,5 @@ export default {
   findBySpecilty,
   findByAddress,
   getSchedules,
+  getSpecilties,
 };
