@@ -15,6 +15,18 @@ export async function findByPatient(patientId) {
   return appointments;
 }
 
+export async function findByDoctor(doctorId) {
+  const { rowCount: existsDoctor } = await doctorRepositories.findById(
+    doctorId
+  );
+  if (!existsDoctor) throw Error("Doctor not found");
+
+  const { rows: appointments } = await appointmentRepositories.findByDoctor(
+    doctorId
+  );
+  return appointments;
+}
+
 export async function create(newAppointment) {
   const { date, start, doctorId, patientId } = newAppointment;
 
@@ -43,5 +55,6 @@ export async function create(newAppointment) {
 
 export default {
   findByPatient,
+  findByDoctor,
   create,
 };

@@ -20,6 +20,22 @@ export async function findByPatient(patientId) {
   return result;
 }
 
+export async function findByDoctor(doctorId) {
+  const result = await db.query(
+    `
+    SELECT a.*, patients.name AS "patientsName", specilties.name AS specilty FROM appointments a
+    LEFT JOIN patients
+    ON patients.id = a.patient_id
+    LEFT JOIN specilties
+    ON specilties.id = a.specilty_id
+    WHERE a.doctor_id = $1
+  `,
+    [doctorId]
+  );
+
+  return result;
+}
+
 export async function create(newAppointment) {
   const { date, start, doctorId, patientId } = newAppointment;
 
@@ -42,5 +58,6 @@ export async function create(newAppointment) {
 
 export default {
   findByPatient,
+  findByDoctor,
   create,
 };

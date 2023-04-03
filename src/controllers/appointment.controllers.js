@@ -11,6 +11,17 @@ export async function findByPatient(req, res) {
   }
 }
 
+export async function findByDoctor(req, res) {
+  const { doctorId } = req.body;
+
+  try {
+    const appointments = await appointmentServices.findByDoctor(doctorId);
+    return res.status(200).send(appointments);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+}
+
 export async function create(req, res) {
   const newAppointment = req.body;
 
@@ -24,5 +35,6 @@ export async function create(req, res) {
 
 export default {
   findByPatient,
+  findByDoctor,
   create,
 };
