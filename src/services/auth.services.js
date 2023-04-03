@@ -2,16 +2,17 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import patientRepositories from "../repositories/patient.repositories.js";
 import doctorRepositories from "../repositories/doctor.repositories.js";
+import errors from "../errors/index.js";
 
 export async function signin(user) {
-  const { email, password, type } = user;
+  const { cpf, password, type } = user;
 
   let foundUser;
   if (type === "patient") {
-    foundUser = await patientRepositories.findPatientByEmail(email);
+    foundUser = await patientRepositories.findByCpf(cpf);
   }
   if (type === "doctor") {
-    foundUser = await doctorRepositories.findDoctorByEmail(email);
+    foundUser = await doctorRepositories.findByCpf(cpf);
   }
 
   const {
@@ -20,11 +21,11 @@ export async function signin(user) {
   } = foundUser;
 
   //User exists?
-  if (!rowCount) throw Error("User not Found");
+  if (!rowCount) throw errors.unauthorizedError();
 
   //Password is correct?
   const isCorrect = await bcrypt.compare(password, account.password);
-  if (!isCorrect) throw Error("UNAUTHORIZADED");
+  if (!isCorrect) throw errors.unauthorizedError();
 
   //Generate the token
   const token = jwt.sign({ id: account.id, type }, process.env.SECRET_JWT);

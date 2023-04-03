@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 const accountSchema = Joi.object({
-  email: Joi.string().email().required(),
+  cpf: Joi.string().min(10).max(11).required(),
   password: Joi.string().required(),
   type: Joi.string().valid("patient", "doctor").required(),
 });

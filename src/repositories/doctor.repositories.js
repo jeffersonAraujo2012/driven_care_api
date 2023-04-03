@@ -12,6 +12,11 @@ export async function findById(id) {
   return result;
 }
 
+export async function findByCpf(cpf) {
+  const result = await db.query(`SELECT * FROM doctors WHERE cpf = $1`, [cpf]);
+  return result;
+}
+
 export async function findByName(name) {
   const result = await db.query(
     `
@@ -90,6 +95,7 @@ export default {
   findByName,
   findBySpecilty,
   findByAddress,
+  findByCpf,
   getSchedules,
   getSpecilties,
 };
