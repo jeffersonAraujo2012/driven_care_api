@@ -12,7 +12,7 @@ export async function create(req, res) {
 }
 
 export async function findByName(req, res) {
-  const { name } = req.body;
+  const { name } = req.params;
 
   try {
     const doctors = await doctorServices.findByName(name);
@@ -23,10 +23,10 @@ export async function findByName(req, res) {
 }
 
 export async function findBySpecilty(req, res) {
-  const { idSpecilty } = req.body;
+  const { speciltyId } = req.params;
 
   try {
-    const doctors = await doctorServices.findBySpecilty(idSpecilty);
+    const doctors = await doctorServices.findBySpecilty(speciltyId);
     return res.status(200).send(doctors);
   } catch (err) {
     return res.status(500).send("Something went wrong: " + err.message);
@@ -34,7 +34,7 @@ export async function findBySpecilty(req, res) {
 }
 
 export async function findByAddress(req, res) {
-  const { stateId } = req.body;
+  const { stateId } = req.params;
 
   try {
     const doctors = await doctorServices.findByAddress(stateId);
