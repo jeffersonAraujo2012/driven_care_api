@@ -22,6 +22,18 @@ export async function findByDoctor(req, res) {
   }
 }
 
+export async function updateStatus(req, res) {
+  const { appointmentId } = req.params;
+  const { status } = req.body;
+
+  try {
+    await appointmentServices.updateStatus({ appointmentId, status });
+    return res.sendStatus(200);
+  } catch (err) {
+    return res.status(500).send(err.message);
+  }
+}
+
 export async function create(req, res) {
   const newAppointment = req.body;
 
@@ -37,4 +49,5 @@ export default {
   findByPatient,
   findByDoctor,
   create,
+  updateStatus,
 };

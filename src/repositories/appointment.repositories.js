@@ -36,6 +36,15 @@ export async function findByDoctor(doctorId) {
   return result;
 }
 
+export async function findById(id) {
+  const result = await db.query(
+    `SELECT * FROM appointments
+     WHERE id = $1`,
+    [id]
+  );
+  return result;
+}
+
 export async function create(newAppointment) {
   const { date, start, doctorId, patientId, speciltyId } = newAppointment;
 
@@ -56,8 +65,19 @@ export async function create(newAppointment) {
   );
 }
 
+export async function updateStatus(updateData) {
+  const { status, appointmentId } = updateData;
+  await db.query(
+    `UPDATE appointments SET status = $1
+     WHERE id = $2`,
+    [status, appointmentId]
+  );
+}
+
 export default {
   findByPatient,
   findByDoctor,
+  findById,
   create,
+  updateStatus,
 };

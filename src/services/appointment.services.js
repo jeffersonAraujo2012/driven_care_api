@@ -52,14 +52,29 @@ export async function create(newAppointment) {
 
   //The doctor has the specilty?
   const { rows: specilties } = await doctorRepositories.getSpecilties(doctorId);
-  const hasSpecilty = specilties.filter(s => s.specilty_id === speciltyId).length;
+  const hasSpecilty = specilties.filter(
+    (s) => s.specilty_id === speciltyId
+  ).length;
   if (!hasSpecilty) throw Error("The doctor has not the specilty");
 
   await appointmentRepositories.create(newAppointment);
+}
+
+export async function updateStatus(updateData) {
+  const { appointmentId } = updateData;
+
+  //Exists appointment?
+  const { rowCount: existsAppointment } =
+    await appointmentRepositories.findById(appointmentId);
+  if (!existsAppointment) throw Error("Appointment not found");
+
+  //change status
+  await appointmentRepositories.updateStatus(updateData);
 }
 
 export default {
   findByPatient,
   findByDoctor,
   create,
+  updateStatus,
 };
